@@ -176,17 +176,6 @@ const loginUserWithGoogle = asyncHandler(async (req, res) =>{
         const payload = ticket.getPayload();
         const userId = payload.sub; // This is the Google user ID
         const email = payload.email; // User's email
-        
-        let user = await User.findOne({ email });
-        if (user) {
-            // If user exists, update the Google User ID if not already set
-            if (!user.googleUserId) {
-              user.googleUserId = googleUserId;
-              await user.save();
-            }
-          } 
-        // Now you can create a user session or JWT for the logged-in user
-        console.log('User ID:', userId);
     
         // For example, create a JWT token for session management (optional)
         const jwtToken = await generateJwtToken(userId);  // You should create this function for your app
